@@ -1,0 +1,79 @@
+#!/bin/bash
+# program for calculate statistic
+
+#echo "Hello World"
+#myname="Aldi"
+#echo $myname
+
+if [[ $1 == -r* ]];
+then
+	echo -e "Average\tMedian"
+	while read myfile
+	do
+		sum=0
+		count=0
+		ave=0
+		sort_myfile=$(echo "$myfile" | expand | tr ' ' '\n' | sed '/^$/d' | sort -n | tr '\n' ' ')
+		array=($sort_myfile)
+		len=${#array[@]}
+		mid=$(expr $len / 2)
+		median=${array[mid]}
+		for i in $myfile
+		do
+			count=`expr $count + 1`	
+			sum=`expr $sum + $i`
+			ave=$((($sum + ($count / 2)) / $count))
+		done
+		echo -e "$ave\t$median"
+		#echo -e "$mid\n"
+	done < "${2:-/dev/stdin}"
+
+elif [[ $1 == -c* ]];
+then
+	echo "under construction"
+	#file=$1
+	#echo
+	
+	#numrows=1
+	#while read -r -a array
+	#do
+	#	((numrows++))
+	#	for i in "${array[@]}"
+	#	do
+	#		column[i]+="$array[i]"$'\n'
+	#	done
+	#done < $file
+
+	#midrow=$((1+numrows/2))
+	#echo "$midrow"
+
+	#result=''
+	#for i in "${!column[@]}"
+	#do
+	#	median=$(sort -n <<<"${column[i]}" | head -n "$midrow" | tail -n 1)
+	#	result+="$median "
+	#done <$1
+
+	#echo "Average: "
+	#echo "still under construction"
+	#echo "Median: $result"
+else
+	echo "busted"
+fi
+
+#read File
+
+#while read num
+#do
+#	sum=0
+#	count=0
+#	ave=0
+#	for i in $num
+#	do
+#		sum=$(($sum + $i))
+#		#count=$((count + 1))
+#		#ave=$((($sum + ($count / 2)) / $count))
+#	done
+#	echo "$sum"
+#	echo "$num Sum: $sum  average: $ave"
+#done < $File
