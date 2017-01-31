@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+fname=$1
+echo "input data:"
+cat "$fname"
+echo
+
+numrows=1
+while read -r -a array
+do
+	((numrows++))
+	for i in "${!array[@]}"
+	do
+		column[i]+="${array[i]}"$'\n'
+	done
+done < $fname
+
+echo "numrows: $numrows"
+
+midrow=$((1+numrows/2))
+echo "midrow: $midrow"
+
+result=''
+for i in "${!column[@]}"
+do
+	
+	median=$(sort -n <<<"${column[i]}"  | head -n "$midrow" | tail -n 1)
+	result+="$median "
+	#result=${median[$midrow]}
+done < $1
+
+echo "result: $result"

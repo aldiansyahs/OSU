@@ -77,8 +77,8 @@ then
 	#get the length of the first line
 	len_arr=${#first_arr[@]}
 
-	#aver=()
-	#med=()
+	aver=()
+	med=()
 	#success=0
 	#fail=1
 	#check if the file is empty
@@ -154,19 +154,16 @@ else
 	error
 	exit $fail
 fi
-#clean or remove any temporary file
+
 clean (){
 	rm -f "tmp_file_$$"
 	exit 0
 }
 
-#trap command to catch interrup, hangup, and terminate signal
 trap clean TERM HUP INT
 
-#since I don't use any temporary file
-#make any temporary file and remove it
-#echo 'screw up' > "tmp_file_$$"
-#rm "tmp_file_$$"
+echo 'screw up' > "tmp_file_$$"
+rm "tmp_file_$$"
 
 #read File
 

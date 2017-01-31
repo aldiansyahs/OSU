@@ -1,0 +1,100 @@
+#!/bin/bash
+
+#fname=$1
+#echo "input data: "
+#cat $fname
+#echo
+
+if [[ $1 == -c* ]];
+then
+	#fname=$1
+	#echo "input data: "
+	#echo "$1"
+	#echo
+	temp=""
+	while read line
+	do
+		temp+=$line
+		temp+=$'\n'
+	done < "${2:-/dev/stdin}"
+
+
+first_line_arr=($(printf "%s\n" "$temp" | head -1))
+
+first_line_len=${#first_line_arr[@]}
+
+#echo "$first_line_len"
+
+ave=()
+med=()
+
+if [[ $first_line_len == 0 ]];
+then
+	echo Averages:
+	echo -e "\n"
+	echo Medians:
+	echo -e "\n"
+fi
+
+for i in $(seq 1 $first_line_len)
+do
+	numb=$(printf "%s\n" "$temp" | cut -f $i | sort -n | tr '\n' ' ')
+	arr=($numb)
+	mid=$(expr ${#arr[@]} / 2)
+	mean=${arr[$mid]}
+	means+=($mean)
+done
+	echo -e "X:\n$temp"
+	echo "mean: $mean"
+	echo "total line: $first_line_len" 
+	echo "mid: $mid"
+	echo Median
+	echo "${means[@]}"
+	#printf "%s\t" ${means[@]}
+	#printf "\n"
+
+fi
+#echo "$file"
+
+
+
+#fname=$1
+#echo "input data:"
+#cat "$fname"
+#echo
+
+#if [ $# -ne 1 ]; then
+#        echo "Usage: \"$0\" <filename>"
+#        exit
+#fi
+
+#if [ ! -f $1 ]; then
+#        echo "$1 file not found."
+#        echo "Usage: $0 <filename>"
+#        exit
+#fi
+
+#sum=0
+#count=0
+#arq=$1
+
+#while read line
+#do
+#        num=`echo ${#line}`
+#	echo "test: $num"
+ #       sum=`expr $sum + $num`
+  #      count=`expr $count + 1`
+#	#echo "$num"
+#done < "$arq"
+
+#if [ "$count" != 0 ]
+#then
+#        avg=`expr $sum / $count`
+#	printf "Sum= \"$sum\" \n Count= \"$count\"  \n Avg= \"$avg\"\n"
+#        exit 0
+#else
+#	printf "Sum= \"$sum\" \n Count= \"$count\"  \n Avg= undefined"
+#        exit 0
+#fi
+
+#printf "Surname: %s\nName: %s\n" "$SURNAME" "$FIRSTNAME"

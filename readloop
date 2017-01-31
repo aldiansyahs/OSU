@@ -1,0 +1,5 @@
+#!/bin/bash
+while read File
+do
+	echo "$File"
+done < $1
